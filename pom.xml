@@ -19,8 +19,8 @@
         <serenity.maven.version>3.5.1</serenity.maven.version>
         <junit.version>4.13.2</junit.version>
         <maven.compiler.plugin.version>3.12.1</maven.compiler.plugin.version>
-        <maven.surefire.plugin.version>3.2.3</maven.surefire.plugin.version>
-        <maven.failsafe.plugin.version>3.2.3</maven.failsafe.plugin.version>
+        <maven.surefire.plugin.version>3.2.5</maven.surefire.plugin.version>
+        <maven.failsafe.plugin.version>3.2.5</maven.failsafe.plugin.version>
 
         <tags></tags>
         <parallel.tests></parallel.tests>
@@ -80,11 +80,7 @@
         </dependency>
 
         <!--  serenity-jira-requirements-provider -->
-        <dependency>
-            <groupId>net.serenity.plugins.jira</groupId>
-            <artifactId>serenity-jira-requirements-provider</artifactId>
-            <version>xxx</version>
-        </dependency>
+
 
     </dependencies>
     <build>
@@ -93,7 +89,6 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${maven.surefire.plugin.version}</version>
-
                 <configuration>
                     <skip>false</skip>
                 </configuration>
@@ -158,28 +153,6 @@
                     </execution>
                 </executions>
             </plugin>
-
-        <plugin>
-            <groupId>net.serenity.maven.plugins</groupId>
-            <artifactId>maven-serenity-plugin</artifactId>
-            <version>xxx</version>
-            <executions>
-                <execution>
-                    <id>serenity-reports</id>
-                    <phase>post-integration-test</phase>
-                    <goals>
-                        <goal>aggregate</goal>
-                    </goals>
-                </execution>
-            </executions>
-            <dependencies>
-                <dependency>
-                    <groupId>net.serenity.plugins.jira</groupId>
-                    <artifactId>serenity-jira-requirements-provider</artifactId>
-                    <version>xxx</version>
-                </dependency>
-            </dependencies>
-        </plugin>
     </plugins>
     </build>
 </project>
