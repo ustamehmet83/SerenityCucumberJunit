@@ -41,6 +41,29 @@
             <version>${serenity.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>net.serenity-bdd</groupId>
+            <artifactId>serenity-cucumber</artifactId>
+            <version>${serenity.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-junit-platform-engine</artifactId>
+            <version>7.11.0</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-suite</artifactId>
+            <version>1.9.2</version>
+            <scope>test</scope>
+        </dependency>
+
+
 
         <dependency>
             <groupId>net.serenity-bdd</groupId>
@@ -50,17 +73,17 @@
         </dependency>
 
         <dependency>
-            <groupId>net.serenity-bdd</groupId>
-            <artifactId>serenity-cucumber</artifactId>
-            <version>${serenity.version}</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>${junit.version}</version>
             <scope>test</scope>
+        </dependency>
+
+        <!--  serenity-jira-requirements-provider -->
+        <dependency>
+            <groupId>net.serenity.plugins.jira</groupId>
+            <artifactId>serenity-jira-requirements-provider</artifactId>
+            <version>xxx</version>
         </dependency>
 
     </dependencies>
@@ -135,6 +158,28 @@
                     </execution>
                 </executions>
             </plugin>
-        </plugins>
+
+        <plugin>
+            <groupId>net.serenity.maven.plugins</groupId>
+            <artifactId>maven-serenity-plugin</artifactId>
+            <version>xxx</version>
+            <executions>
+                <execution>
+                    <id>serenity-reports</id>
+                    <phase>post-integration-test</phase>
+                    <goals>
+                        <goal>aggregate</goal>
+                    </goals>
+                </execution>
+            </executions>
+            <dependencies>
+                <dependency>
+                    <groupId>net.serenity.plugins.jira</groupId>
+                    <artifactId>serenity-jira-requirements-provider</artifactId>
+                    <version>xxx</version>
+                </dependency>
+            </dependencies>
+        </plugin>
+    </plugins>
     </build>
 </project>
