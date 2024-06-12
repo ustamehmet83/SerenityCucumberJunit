@@ -12,6 +12,6 @@ import static io.cucumber.junit.platform.engine.Constants.FILTER_TAGS_PROPERTY_N
 @Suite
 @IncludeEngines("cucumber")
 @SelectClasspathResource("/features")
-@ConfigurationParameter(key = FILTER_TAGS_PROPERTY_NAME, value = "@wiki")
+@ConfigurationParameter(key = FILTER_TAGS_PROPERTY_NAME, value = "@pet")
 @RunWith(SerenityRunner.class)
 public class CucumberTestSuite {}

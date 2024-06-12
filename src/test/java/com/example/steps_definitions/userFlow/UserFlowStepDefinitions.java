@@ -1,16 +1,29 @@
 package com.example.steps_definitions.userFlow;
 
+import com.example.pages.api.Pet;
 import com.example.steps_definitions.hooks.Hooks;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import io.restassured.http.ContentType;
+import io.restassured.response.Response;
 import org.junit.jupiter.api.*;
 
 import java.io.File;
+import java.util.Map;
 
 import static io.restassured.RestAssured.*;
 //import static io.restassured.module.jsv.JsonSchemaValidator.*;
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static org.hamcrest.Matchers.*;
 
-public class UserFlowStepDefinitions extends Hooks {
+public class UserFlowStepDefinitions {
+
+    String baseURI = "https://petstore.swagger.io/v2/";
+    public Response response;
+    public Map<Object, Object> responseMap;
+    public static int pet_id;
+    public Pet requestPet;
 
     /**************************************************************
      * The test expecting to create successfully a user on the page
@@ -34,9 +47,8 @@ public class UserFlowStepDefinitions extends Hooks {
                 log().all().
                 body(
                         "message", is("5555"),
-                        "code", is(200));
-                //.body(matchesJsonSchemaInClasspath("responseSchema/createUserSchema.json")
-
+                        "code", is(200)).
+                body(matchesJsonSchemaInClasspath("responseSchema/createUserSchema.json"));
 
     }
 
@@ -190,4 +202,7 @@ public class UserFlowStepDefinitions extends Hooks {
                         "message", is("User not found"));
 
     }
+
+
+   
 }

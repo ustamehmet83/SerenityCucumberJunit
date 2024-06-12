@@ -19,14 +19,10 @@ import java.util.Map;
 public class Hooks  {
 
     public static String osName;
-    public Response response;
-    public Map<Object, Object> responseMap;
-    public static int pet_id;
-    public Pet requestPet;
 
     @Before
     public void setUp(Scenario scenario) throws Exception {
-        baseURI = "https://petstore.swagger.io/v2/";
+        String baseURI = "https://petstore.swagger.io/v2/";
 
         BaseTests.softAssertionsThread.set(new SoftAssertions());
         SerenityInfrastructure.getEnvironmentVariables();

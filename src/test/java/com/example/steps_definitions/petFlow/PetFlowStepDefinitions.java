@@ -3,7 +3,10 @@ import com.example.pages.api.Tag;
 import com.example.pages.api.Category;
 import com.example.pages.api.Pet;
 import com.example.steps_definitions.hooks.Hooks;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.When;
 import io.restassured.http.ContentType;
+import io.restassured.response.Response;
 import org.junit.jupiter.api.*;
 
 
@@ -16,9 +19,13 @@ import static java.util.Collections.*;
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class PetFlowStepDefinitions  extends Hooks {
+public class PetFlowStepDefinitions  {
 
-
+    public static String osName;
+    public Response response;
+    public Map<Object, Object> responseMap;
+    public static int pet_id;
+    public Pet requestPet;
 
     /*************************************************
      * The Test creating a pet using the JSON file
@@ -26,9 +33,9 @@ public class PetFlowStepDefinitions  extends Hooks {
      * POST METHOD
      *************************************************/
 
-    @Test
-    public void test1() {
 
+    @Given("User create a pet using the Json file")
+    public void userCreateAPetUsingTheJsonFile() {
         response =
                 given().
                         contentType(ContentType.JSON).
@@ -52,8 +59,8 @@ public class PetFlowStepDefinitions  extends Hooks {
      * POST METHOD
      *************************************************/
 
-    @Test
-    public void test2() {
+    @Given("User create a pet using Pojo pet class structure")
+    public void userCreateAPetUsingPojoPetClassStructure() {
 
 
         /**
@@ -84,8 +91,8 @@ public class PetFlowStepDefinitions  extends Hooks {
      * GET METHOD
      *************************************************/
 
-    @Test
-    public void test3(){
+    @Given("User gets Created previous test's pet calling details")
+    public void UserGetsCreatedPreviousTestsPetCallingDetails() {
 
         given().log().all().
                 accept("application/json").
@@ -105,8 +112,8 @@ public class PetFlowStepDefinitions  extends Hooks {
      * PUT METHOD
      *************************************************/
 
-    @Test
-    public void test4(){
+    @Given("User update previous test's created pet")
+    public void UserUpdatePreviousTestsCreatedPet() {
         requestPet = new Pet(8888,new Category(88,"pluffy"),
                 "tomtom", singletonList("picture"), singletonList(new Tag(9090, "nope")),
                 "pending");
@@ -138,8 +145,8 @@ public class PetFlowStepDefinitions  extends Hooks {
      * GET METHOD
      *************************************************/
 
-    @Test
-    public void test5(){
+    @Given("User check previous test's pet calling details Schema validation")
+    public void UserCheckPreviousTestsPetCallingDetailsSchemaValidation() {
 
         given().log().all().
                 accept("application/json").
@@ -155,16 +162,13 @@ public class PetFlowStepDefinitions  extends Hooks {
 
     }
 
-
-
     /*************************************************
      * Delete first created test's  pet
      * DELETE METHOD
      *************************************************/
 
-    @Test
-    public void test6(){
-
+    @Given("User delete first created test pet")
+    public void UserDeleteFirstCreatedTestPet() {
 
         given().
                 contentType(ContentType.JSON).
@@ -176,7 +180,6 @@ public class PetFlowStepDefinitions  extends Hooks {
                 body("code",is(200),
                         "message",is("8888")).
                 log().all();
-
     }
 
 
@@ -186,8 +189,8 @@ public class PetFlowStepDefinitions  extends Hooks {
      * GET METHOD
      *************************************************/
 
-    @Test
-    public void test7(){
+    @Given("User check deleted pet information")
+    public void UserCheckDeletedPetInformation() {
 
         given().log().all().
                 accept("application/json").
@@ -200,4 +203,6 @@ public class PetFlowStepDefinitions  extends Hooks {
                 log().all() ;
 
     }
+
+
 }

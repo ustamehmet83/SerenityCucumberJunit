@@ -8,7 +8,7 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsEqual.equalTo;
 
-public class DDTPetStepDefinitions extends Hooks {
+public class DDTPetStepDefinitions  {
     @ParameterizedTest
     @CsvSource({"777,hamham",
             "222,domdom",

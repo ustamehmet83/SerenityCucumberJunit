@@ -14,14 +14,15 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source.version>11</maven.compiler.source.version>
         <maven.compiler.target.version>11</maven.compiler.target.version>
-
         <serenity.version>4.0.30</serenity.version>
         <serenity.maven.version>3.5.1</serenity.maven.version>
-        <junit.version>4.13.2</junit.version>
+        <junit.version>5.4.0</junit.version>
         <maven.compiler.plugin.version>3.12.1</maven.compiler.plugin.version>
-        <maven.surefire.plugin.version>3.2.5</maven.surefire.plugin.version>
+        <maven.surefire.plugin.version>3.0.0-M5</maven.surefire.plugin.version>
         <maven.failsafe.plugin.version>3.2.5</maven.failsafe.plugin.version>
-
+        <restassured.version>4.5.1</restassured.version>
+        <gson.version>2.9.0</gson.version>
+        <json-schema-validator.version>4.5.1</json-schema-validator.version>
         <tags></tags>
         <parallel.tests></parallel.tests>
         <webdriver.base.url>https://opensource-demo.orangehrmlive.com/dev</webdriver.base.url>
@@ -34,36 +35,29 @@
             <version>${serenity.version}</version>
             <scope>test</scope>
         </dependency>
-
-        <!--        this is the dependency that wrap up rest assured with additional serenity support-->
         <dependency>
-            <groupId>net.serenity-bdd</groupId>
-            <artifactId>serenity-rest-assured</artifactId>
-            <version>2.4.4</version>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <version>${restassured.version}</version>
+            <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
-            <version>5.7.1</version>
+            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>com.github.javafaker</groupId>
             <artifactId>javafaker</artifactId>
             <version>1.0.2</version>
         </dependency>
-
-
-
         <dependency>
             <groupId>org.junit.platform</groupId>
             <artifactId>junit-platform-suite</artifactId>
             <version>1.10.0</version>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>net.serenity-bdd</groupId>
             <artifactId>serenity-junit</artifactId>
@@ -76,44 +70,54 @@
             <version>${serenity.version}</version>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>net.serenity-bdd</groupId>
             <artifactId>serenity-cucumber</artifactId>
             <version>${serenity.version}</version>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-junit-platform-engine</artifactId>
             <version>7.11.0</version>
             <scope>test</scope>
         </dependency>
-
-
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
             <version>3.22.0</version>
             <scope>test</scope>
         </dependency>
-
-
-
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>${gson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>json-schema-validator</artifactId>
+            <version>${json-schema-validator.version}</version>
+        </dependency>
     </dependencies>
+
     <build>
         <plugins>
             <plugin>
                 <groupId>net.serenity-bdd.maven.plugins</groupId>
                 <artifactId>serenity-maven-plugin</artifactId>
-                <version>${serenity.version}</version>
+                <version>${serenity.maven.version}</version>
                 <configuration>
                     <tags>${tags}</tags>
                 </configuration>
@@ -128,7 +132,6 @@
                     </execution>
                 </executions>
             </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -145,7 +148,6 @@
                     </includes>
                 </configuration>
             </plugin>
-
             <plugin>
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <version>${maven.failsafe.plugin.version}</version>
@@ -167,17 +169,8 @@
                             <goal>verify</goal>
                         </goals>
                     </execution>
-                    <execution>
-                        <id>serenity-reports</id>
-                        <phase>post-integration-test</phase>
-                        <goals>
-                            <goal>aggregate</goal>
-                        </goals>
-                    </execution>
-
                 </executions>
             </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -187,11 +180,10 @@
                     <target>${maven.compiler.target.version}</target>
                 </configuration>
             </plugin>
-
             <plugin>
                 <groupId>net.serenity-bdd.maven.plugins</groupId>
                 <artifactId>serenity-maven-plugin</artifactId>
-                <version>${serenity.version}</version>
+                <version>${serenity.maven.version}</version>
                 <dependencies>
                     <dependency>
                         <groupId>net.serenity-bdd</groupId>
@@ -213,6 +205,6 @@
                     </execution>
                 </executions>
             </plugin>
-    </plugins>
+        </plugins>
     </build>
 </project>

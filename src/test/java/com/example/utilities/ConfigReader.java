@@ -10,8 +10,6 @@ public class ConfigReader {
     private static EnvironmentVariables environmentVariables ;
     static {
         environmentVariables = SystemEnvironmentVariables.createEnvironmentVariables();
-        System.out.println("environmentVariables.getKeys() = " + environmentVariables.getProperties());
-
     }
 
     public static String getProperty(String propertyName){

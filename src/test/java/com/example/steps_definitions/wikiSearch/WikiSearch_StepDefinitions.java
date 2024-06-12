@@ -2,6 +2,7 @@ package com.example.steps_definitions.wikiSearch;
 
 
 import com.example.pages.uı.WikiSearchPage;
+import com.example.utilities.ConfigReader;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -23,8 +24,8 @@ public class WikiSearch_StepDefinitions {
 
     @Given("User is on Wikipedia home page")
     public void user_is_on_wikipedia_home_page() {
-        wikiSearchPage.open();
-        //wikiSearchPage.getDriver().get(ConfigReader.getProperty("webdriver.base.wikipedia.url"));
+       // wikiSearchPage.open();
+        wikiSearchPage.getDriver().get(ConfigReader.getProperty("webdriver.base.wikipedia.url"));
     }
 
     @When("User types {string} in the wiki search box")
@@ -40,9 +41,9 @@ public class WikiSearch_StepDefinitions {
 
     @Then("User sees {string} is in the wiki title")
     public void user_sees_is_in_the_wiki_title(String string) {
-        String expectedTitle = string + " - Wikipedia";
+        String expectedTitle = string + " - Vikipedi";
         String actualTitle = driver.getTitle();
-        Assert.assertEquals("Title is not as expected", actualTitle, expectedTitle);
+        Assert.assertEquals( expectedTitle,actualTitle);
     }
 
     @Then("User sees {string} is in the main header")
