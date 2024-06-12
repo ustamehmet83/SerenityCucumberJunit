@@ -1,4 +1,4 @@
-package com.example.pages;
+package com.example.pages.uı;
 
 
 import net.serenitybdd.core.pages.PageObject;

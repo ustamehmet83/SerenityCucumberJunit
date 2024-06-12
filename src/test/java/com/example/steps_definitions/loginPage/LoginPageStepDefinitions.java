@@ -1,14 +1,12 @@
-package com.example.steps_definitions;
+package com.example.steps_definitions.loginPage;
 
-import com.example.pages.StepDashboardPage;
-import com.example.pages.StepLoginPage;
-import com.example.utilities.ConfigReader;
+import com.example.pages.uı.StepDashboardPage;
+import com.example.pages.uı.StepLoginPage;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import net.serenitybdd.annotations.Managed;
 import net.serenitybdd.annotations.Steps;
-import net.serenitybdd.core.pages.PageObject;
 import org.junit.Assert;
 import org.openqa.selenium.Keys;
 
@@ -28,7 +26,8 @@ public class LoginPageStepDefinitions  {
 
     @Given("User is on Home page")
     public void openApplication() {
-        driver.get(ConfigReader.getProperty("webdriver.base.url"));
+        loginPage.open();
+       // driver.get(ConfigReader.getProperty("webdriver.base.url"));
         System.out.println("Page is opened");
     }
 

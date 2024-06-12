@@ -1,24 +1,17 @@
-package com.example.steps_definitions;
+package com.example.steps_definitions.wikiSearch;
 
 
-import com.example.pages.StepDashboardPage;
-import com.example.pages.StepLoginPage;
-import com.example.pages.WikiSearchPage;
-import com.example.utilities.ConfigReader;
+import com.example.pages.uı.WikiSearchPage;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import net.serenitybdd.annotations.DefaultUrl;
 import net.serenitybdd.annotations.Managed;
 import net.serenitybdd.annotations.Steps;
-import net.serenitybdd.core.pages.PageObject;
 import org.junit.Assert;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-public class WikiSearch_StepDefinitions  {
-
+public class WikiSearch_StepDefinitions {
 
 
     @Managed
@@ -30,9 +23,8 @@ public class WikiSearch_StepDefinitions  {
 
     @Given("User is on Wikipedia home page")
     public void user_is_on_wikipedia_home_page() {
-
-        wikiSearchPage.getDriver().get(ConfigReader.getProperty("webdriver.base.wikipedia.url"));
-
+        wikiSearchPage.open();
+        //wikiSearchPage.getDriver().get(ConfigReader.getProperty("webdriver.base.wikipedia.url"));
     }
 
     @When("User types {string} in the wiki search box")
