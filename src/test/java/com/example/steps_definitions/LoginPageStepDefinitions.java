@@ -8,6 +8,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import net.serenitybdd.annotations.Managed;
 import net.serenitybdd.annotations.Steps;
+import net.serenitybdd.core.pages.PageObject;
 import org.junit.Assert;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -15,8 +16,7 @@ import org.openqa.selenium.WebDriver;
 
 public class LoginPageStepDefinitions {
 
-    @Managed
-    WebDriver driver;
+
     @Steps
     StepLoginPage loginPage;
 
@@ -25,7 +25,7 @@ public class LoginPageStepDefinitions {
 
     @Given("User is on Home page")
     public void openApplication() {
-        driver.get(ConfigReader.getProperty("webdriver.base.url"));
+        loginPage.getDriver().get(ConfigReader.getProperty("webdriver.base.url"));
         System.out.println("Page is opened");
     }
 

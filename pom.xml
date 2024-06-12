@@ -24,7 +24,7 @@
 
         <tags></tags>
         <parallel.tests></parallel.tests>
-        <webdriver.base.url></webdriver.base.url>
+        <webdriver.base.url>https://opensource-demo.orangehrmlive.com/dev</webdriver.base.url>
     </properties>
 
     <dependencies>
@@ -47,7 +47,6 @@
             <version>${serenity.version}</version>
             <scope>test</scope>
         </dependency>
-
 
         <dependency>
             <groupId>io.cucumber</groupId>
@@ -79,7 +78,7 @@
             <scope>test</scope>
         </dependency>
 
-        <!--  serenity-jira-requirements-provider -->
+
 
 
     </dependencies>

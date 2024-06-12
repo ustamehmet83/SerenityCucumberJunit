@@ -9,13 +9,15 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import net.serenitybdd.annotations.DefaultUrl;
 import net.serenitybdd.annotations.Managed;
 import net.serenitybdd.annotations.Steps;
+import net.serenitybdd.core.pages.PageObject;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-public class WikiSearch_StepDefinitions {
+public class WikiSearch_StepDefinitions  {
 
 
 
@@ -27,12 +29,13 @@ public class WikiSearch_StepDefinitions {
 
     @Given("User is on Wikipedia home page")
     public void user_is_on_wikipedia_home_page() {
-        driver.get(ConfigReader.getProperty("webdriver.base.gogle.url"));
+        wikiSearchPage.getDriver().get(ConfigReader.getProperty("webdriver.base.wikipedia.url"));
+
     }
 
     @When("User types {string} in the wiki search box")
     public void user_types_in_the_wiki_search_box(String string) {
-        wikiSearchPage.searchBox.getShadowRoot().findElement(By.xpath("//input[@id='input']"));
+        wikiSearchPage.searchBox.click();
         wikiSearchPage.searchBox.sendKeys(string);
     }
 
@@ -43,7 +46,7 @@ public class WikiSearch_StepDefinitions {
 
     @Then("User sees {string} is in the wiki title")
     public void user_sees_is_in_the_wiki_title(String string) {
-        String expectedTitle = string + " - Vikipedi";
+        String expectedTitle = string + " - Wikipedia";
         String actualTitle = driver.getTitle();
         Assert.assertEquals("Title is not as expected", actualTitle, expectedTitle);
     }
@@ -58,8 +61,8 @@ public class WikiSearch_StepDefinitions {
     @Then("User sees {string} is in the image header")
     public void user_sees_is_in_the_image_header(String string) {
         String expectedImageHeader = string;
-        String actualImageHeader = wikiSearchPage.imageHeader.getText();
-        Assert.assertEquals("Title is not as expected", expectedImageHeader, actualImageHeader);
+        String actualImageHeader = wikiSearchPage.imageHeader.getTextContent();
+        Assert.assertEquals(expectedImageHeader, actualImageHeader);
     }
 
 
