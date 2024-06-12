@@ -23,12 +23,14 @@ public class WikiSearch_StepDefinitions  {
 
     @Managed
     WebDriver driver;
+
     @Steps
     WikiSearchPage wikiSearchPage;
 
 
     @Given("User is on Wikipedia home page")
     public void user_is_on_wikipedia_home_page() {
+
         wikiSearchPage.getDriver().get(ConfigReader.getProperty("webdriver.base.wikipedia.url"));
 
     }
