@@ -7,16 +7,14 @@ import org.junit.runner.RunWith;
 @RunWith(CucumberWithSerenity.class)
 @CucumberOptions(
         plugin = {
-                "json:target/cucumber.json",
-                //"html:target/cucumber-reports.html",
-                "html:target/default-html-reports",
-                "rerun:target/rerun.txt",
-                "me.jvt.cucumber.report.PrettyReports:target/cucumber"
+                "pretty", "html:target/serenity-reports/serenity-html-report",
+                "json:target/serenity-reports/cucumber_report.json",
+                "rerun:target/serenity-reports/rerun.txt"
         },
         features = "src/test/resources/features",
         glue = "com.example.steps_definitions",
         dryRun = false,
-        tags = "@wiki",
+        tags = "@DDTPet",
         publish=true
 
 )

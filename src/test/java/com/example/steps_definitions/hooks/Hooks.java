@@ -28,11 +28,7 @@ public class Hooks  {
 
         BaseTests.softAssertionsThread.set(new SoftAssertions());
         SerenityInfrastructure.getEnvironmentVariables();
-
-
-        //ScreenRecorderUtil.startRecording();
         System.out.println(scenario.getName() + " started");
-
         //create connection
         //DBUtils.createConnection();
         //DBUtils.sslContext();

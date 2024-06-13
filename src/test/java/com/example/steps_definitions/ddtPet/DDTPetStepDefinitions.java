@@ -1,6 +1,7 @@
 package com.example.steps_definitions.ddtPet;
 
 import com.example.steps_definitions.hooks.Hooks;
+import io.cucumber.java.en.Given;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -9,15 +10,9 @@ import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsEqual.equalTo;
 
 public class DDTPetStepDefinitions  {
-    @ParameterizedTest
-    @CsvSource({"777,hamham",
-            "222,domdom",
-            "333,dombily",
-            "444,karabas",
-            "555,kral",
-            "666,kontes"})
-    public void getMultiplePet(int id, String expectedName) {
 
+    @Given("User get multiple pet with {int} and {string}")
+    public void userGetMultiplePetWithCsvSource(int id, String expectedName) {
         given().log().all().
                 accept("application/json").
                 when().
@@ -30,4 +25,7 @@ public class DDTPetStepDefinitions  {
                 log().all();
 
     }
+
+
+
 }

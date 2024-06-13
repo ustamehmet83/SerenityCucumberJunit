@@ -16,7 +16,6 @@
         <junit.version>4.13.2</junit.version>
         <serenity.version>4.0.30</serenity.version>
         <serenity.maven.version>3.5.1</serenity.maven.version>
-        <junit.vintage.version>5.8.2</junit.vintage.version>
         <maven.compiler.plugin.version>3.12.1</maven.compiler.plugin.version>
         <maven.surefire.plugin.version>3.2.5</maven.surefire.plugin.version>
         <maven.failsafe.plugin.version>3.2.5</maven.failsafe.plugin.version>
@@ -46,13 +45,6 @@
 
         <dependency>
             <groupId>net.serenity-bdd</groupId>
-            <artifactId>serenity-screenplay-webdriver</artifactId>
-            <version>${serenity.version}</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>net.serenity-bdd</groupId>
             <artifactId>serenity-cucumber</artifactId>
             <version>${serenity.version}</version>
             <scope>test</scope>
@@ -71,12 +63,6 @@
             <scope>test</scope>
         </dependency>
 
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-params</artifactId>
-            <version>5.4.0</version>
-            <scope>test</scope>
-        </dependency>
         <!-- Other dependencies -->
         <dependency>
             <groupId>org.assertj</groupId>
@@ -114,7 +100,8 @@
                     <testFailureIgnore>true</testFailureIgnore>
                     <runOrder>Alphabetical</runOrder>
                     <includes>
-                        <include>**/Test*.java</include>
+                        <include>**/SerenityRunnerTests.java</include>
+                        <include>**/CucumberTestSuite.java</include>
                     </includes>
                 </configuration>
             </plugin>
@@ -124,7 +111,8 @@
                 <version>${maven.failsafe.plugin.version}</version>
                 <configuration>
                     <includes>
-                        <include>**/Test*.java</include>
+                        <include>**/SerenityRunnerTests.java</include>
+                        <include>**/CucumberTestSuite.java</include>
                     </includes>
                     <systemPropertyVariables>
                         <webdriver.base.url>${webdriver.base.url}</webdriver.base.url>
@@ -160,6 +148,7 @@
                 <dependencies>
                     <dependency>
                         <groupId>net.serenity-bdd</groupId>
+                        <artifactId>serenity-single-page-report</artifactId>
                         <version>${serenity.version}</version>
                     </dependency>
                 </dependencies>
