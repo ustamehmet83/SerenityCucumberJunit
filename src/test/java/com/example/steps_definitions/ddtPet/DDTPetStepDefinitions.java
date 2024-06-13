@@ -2,9 +2,6 @@ package com.example.steps_definitions.ddtPet;
 
 import com.example.steps_definitions.hooks.Hooks;
 import io.cucumber.java.en.Given;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
-
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsEqual.equalTo;

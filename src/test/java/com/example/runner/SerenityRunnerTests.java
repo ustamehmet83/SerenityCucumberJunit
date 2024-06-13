@@ -14,7 +14,7 @@ import org.junit.runner.RunWith;
         features = "src/test/resources/features",
         glue = "com.example.steps_definitions",
         dryRun = false,
-        tags = "@DDTPet",
+        tags = "@wiki",
         publish=true
 
 )
