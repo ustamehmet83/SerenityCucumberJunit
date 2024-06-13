@@ -8,16 +8,17 @@ src
     + resources
       + features                  Feature files
         + WikiSearch                  Feature file subdirectories
-             search.feature
+                 WikiSearch.feature
 ```
 ## Serenity BDD with Feature Files under src/test/resources
 
-erenity BDD uses Cucumber to write feature files that describe the behavior of the system in a natural language format. 
+Serenity BDD uses Cucumber to write feature files that describe the behavior of the system in a natural language format. 
 These feature files are a core part of the BDD approach and help in creating automated acceptance tests.
 Feature files are written in Gherkin, a language that uses plain text to describe features, scenarios, and steps
 
 ## The sample scenario
-Both variations of the sample project uses the sample Cucumber scenario. In this scenario, Mehmet is performing a search on the wikipedia:
+Both variations of the sample project uses the sample Cucumber scenario. In this scenario, Mehmet is performing a search on the wikipedia,
+You should add new scenario feature file with Gherkin language using Given When Then annotation under src/test/resources folder.
 
 ```Gherkin
 Feature: Wikipedia search functionality and verifications
@@ -30,6 +31,60 @@ Feature: Wikipedia search functionality and verifications
     Then User sees "Steve Jobs" is in the wiki title
 
 ```
+
+## Step Definitions under src/test/java
+A Step Definition is a method with an expression that links it to one or more Gherkin steps. When Cucumber executes a Gherkin step in a scenario, it will look for a matching step definition to execute.
+
+To illustrate how this works, look at the following Gherkin Scenario:
+```Gherkin
+Scenario: Wikipedia Search Functionality Header Verification
+Given User is on Wikipedia home page
+```
+
+User is on Wikipedia home page part of the step (the text following the Given keyword) will match the following step definition:
+
+```Gherkin
+ @Given("User is on Wikipedia home page")
+public void user_is_on_wikipedia_home_page() {
+    wikiSearchPage.getDriver().get(ConfigReader.getProperty("webdriver.base.wikipedia.url"));
+}
+```
+## Create Serenity Test Runner under src/test/java
+We cannot run a Feature file on its own in a cucumber-based framework.
+We need to create a Java class, which will run the Feature File. It is the starting point for JUnit to start executing the tests.
+SerenityRunnerTests class creates under src/test/java. When you run the tests with serenity, you use the CucumberWithSerenity test runner.
+If the feature files are not in the same package as the test runner class, you also need to use the @CucumberOptions class to provide the root directory
+where the feature files found.
+```js
+@RunWith(CucumberWithSerenity.class)
+@CucumberOptions(
+        plugin = {
+                "pretty", "html:target/serenity-reports/serenity-html-report",
+                "json:target/serenity-reports/cucumber_report.json",
+                "rerun:target/serenity-reports/rerun.txt"
+        },
+        features = "src/test/resources/features",
+        glue = "com.example.steps_definitions",
+        dryRun = false,
+        tags = "@wiki",
+        publish=true
+
+)
+```
+### Cucumber Options
+
+In your Serenity BDD project, you can configure Cucumber options to specify how tests should be executed and reported. Below is an example configuration:
+
+### plugin: 
+Specifies the output formats and locations for the test results.
+### features:
+Specifies the path to the directory containing your feature files.
+### dryRun:
+When set to true, Cucumber will check that every step in the feature files has a corresponding step definition without actually running the tests.
+### tags:
+Filters the scenarios to be executed based on tags.
+### publish:
+When set to true, it publishes the report to reports.cucumber.io, which provides a detailed and visual representation of the test results.
 
 ## Simplified WebDriver configuration and other Serenity extras
 The sample projects both use some Serenity features which make configuring the tests easier. In particular, Serenity uses the `serenity.conf` file in the `src/test/resources` directory to configure test execution options.
@@ -92,27 +147,6 @@ environments {
     }
   }
 
-```
-## Create Serenity Test Runner under src/test/java
-We cannot run a Feature file on its own in a cucumber-based framework.
-We need to create a Java class, which will run the Feature File. It is the starting point for JUnit to start executing the tests. TestRunner class creates under src/test/java. When you run the tests with serenity, you use the CucumberWithSerenity test runner. If the feature files are not in the same package as the test runner class, you also need to use the @CucumberOptions class to provide the root directory where the feature files found.
-
-## Step Definitions under src/test/java
-A Step Definition is a method with an expression that links it to one or more Gherkin steps. When Cucumber executes a Gherkin step in a scenario, it will look for a matching step definition to execute.
-
-To illustrate how this works, look at the following Gherkin Scenario:
-```Gherkin
-Scenario: Wikipedia Search Functionality Header Verification
-Given User is on Wikipedia home page
-```
-
-User is on Wikipedia home page part of the step (the text following the Given keyword) will match the following step definition:
-
-```Gherkin
- @Given("User is on Wikipedia home page")
-public void user_is_on_wikipedia_home_page() {
-    wikiSearchPage.getDriver().get(ConfigReader.getProperty("webdriver.base.wikipedia.url"));
-}
 ```
 
 ## Writing an API test
