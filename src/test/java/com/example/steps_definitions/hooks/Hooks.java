@@ -4,10 +4,12 @@ package com.example.steps_definitions.hooks;
 import com.example.pages.api.Pet;
 import com.example.steps_definitions.base.BaseTests;
 import com.example.utilities.BrowserUtils;
+import com.example.utilities.ConfigReader;
 import com.example.utilities.DBUtils;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
+import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import net.serenitybdd.core.di.SerenityInfrastructure;
 import net.serenitybdd.model.environment.EnvironmentSpecificConfiguration;
@@ -22,7 +24,7 @@ public class Hooks  {
 
     @Before
     public void setUp(Scenario scenario) throws Exception {
-        String baseURI = "https://petstore.swagger.io/v2/";
+        RestAssured.baseURI = ConfigReader.getProperty("baseURI");
 
         BaseTests.softAssertionsThread.set(new SoftAssertions());
         SerenityInfrastructure.getEnvironmentVariables();

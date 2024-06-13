@@ -1,13 +1,13 @@
 package com.example.steps_definitions.userFlow;
 
 import com.example.pages.api.Pet;
-import com.example.steps_definitions.hooks.Hooks;
+
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import org.junit.jupiter.api.*;
+
 
 import java.io.File;
 import java.util.Map;
@@ -19,7 +19,6 @@ import static org.hamcrest.Matchers.*;
 
 public class UserFlowStepDefinitions {
 
-    String baseURI = "https://petstore.swagger.io/v2/";
     public Response response;
     public Map<Object, Object> responseMap;
     public static int pet_id;
@@ -28,8 +27,8 @@ public class UserFlowStepDefinitions {
     /**************************************************************
      * The test expecting to create successfully a user on the page
      *************************************************************/
-    @Test
-    public void test1() {
+    @Given("User create a user on the page")
+    public void userCreateAUserOnThePage() {
         File file = new File("src/test/resources/requestFile/createUser.json");
         response =
                 given().
@@ -57,9 +56,8 @@ public class UserFlowStepDefinitions {
      * GET METHOD
      *****************************/
 
-    @Test
-    @Order(1)
-    public void test2() {
+    @When("User get created user credentials")
+    public void userGetCreatedUserCredentials() {
         given().
                 accept("application/json").
                 when().
@@ -78,9 +76,8 @@ public class UserFlowStepDefinitions {
      * Update the created user(dan_greaker)
      * PUT METHOD
      ********************************/
-    @Test
-    @Order(2)
-    public void test3() {
+    @Then("User update the created user")
+    public void userUpdateTheCreatedUser() {
         given().
                 contentType(ContentType.JSON).
                 accept("application/json").
@@ -100,9 +97,8 @@ public class UserFlowStepDefinitions {
      * Get updated user (john_doey)
      * GET METHOD
      *****************************/
-    @Test
-    @Order(3)
-    public void test4() {
+    @Then("User get updated user")
+    public void userGetUpdatedUser() {
         given().
                 accept("application/json").
                 when().
@@ -119,11 +115,10 @@ public class UserFlowStepDefinitions {
 
     /***********************************
      * Delete the updated user(john_doey)
-     * DELETE MRTHOD
+     * DELETE METHOD
      **********************************/
-    @Test
-    @Order(4)
-    public void test5() {
+    @Then("User delete the updated user")
+    public void userDeleteTheUpdatedUser() {
         given().
                 contentType(ContentType.JSON).
                 accept("application/json").
@@ -142,9 +137,8 @@ public class UserFlowStepDefinitions {
      * Delete the first created user(dan_greaker)
      * DELETE METHOD
      ****************************************/
-    @Test
-    @Order(5)
-    public void test6() {
+    @Then("User delete first created user")
+    public void userDeleteFirstCreatedUser() {
         given().
                 contentType(ContentType.JSON).
                 accept("application/json").
@@ -164,9 +158,8 @@ public class UserFlowStepDefinitions {
      * Thr test suppose to get error message
      * GET METHOD
      *****************************/
-    @Test
-    @Order(6)
-    public void test7() {
+    @Then("User get deleted user")
+    public void userGetDeletedUser() {
         given().
                 accept("application/json").
                 when().
@@ -187,9 +180,8 @@ public class UserFlowStepDefinitions {
      * Thr test suppose to get error message
      * GET METHOD
      *****************************/
-    @Test
-    @Order(6)
-    public void test8() {
+    @Then("User check user is deleted")
+    public void userCheckUserIsDeleted() {
         given().
                 accept("application/json").
                 when().
@@ -202,6 +194,23 @@ public class UserFlowStepDefinitions {
                         "message", is("User not found"));
 
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
    

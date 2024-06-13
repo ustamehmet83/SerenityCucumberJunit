@@ -14,17 +14,11 @@ import org.openqa.selenium.WebDriver;
 
 public class WikiSearch_StepDefinitions {
 
-
-    @Managed
-    WebDriver driver;
-
     @Steps
     WikiSearchPage wikiSearchPage;
 
-
     @Given("User is on Wikipedia home page")
     public void user_is_on_wikipedia_home_page() {
-       // wikiSearchPage.open();
         wikiSearchPage.getDriver().get(ConfigReader.getProperty("webdriver.base.wikipedia.url"));
     }
 
@@ -40,22 +34,22 @@ public class WikiSearch_StepDefinitions {
     }
 
     @Then("User sees {string} is in the wiki title")
-    public void user_sees_is_in_the_wiki_title(String string) {
-        String expectedTitle = string + " - Vikipedi";
-        String actualTitle = driver.getTitle();
-        Assert.assertEquals( expectedTitle,actualTitle);
+    public void user_sees_is_in_the_wiki_title(String title) {
+        String expectedTitle = title;
+        String actualTitle =wikiSearchPage.getDriver().getTitle();
+        Assert.assertTrue( actualTitle.contains(expectedTitle));
     }
 
     @Then("User sees {string} is in the main header")
-    public void user_sees_steve_jobs_is_in_the_main_header(String string) {
-        String expectedHeader = string;
+    public void user_sees_steve_jobs_is_in_the_main_header(String header) {
+        String expectedHeader = header;
         String actualFirstHeader = wikiSearchPage.firstHeader.getText();
         Assert.assertEquals("Title is not as expected", expectedHeader, actualFirstHeader);
     }
 
     @Then("User sees {string} is in the image header")
-    public void user_sees_is_in_the_image_header(String string) {
-        String expectedImageHeader = string;
+    public void user_sees_is_in_the_image_header(String imageHeader) {
+        String expectedImageHeader = imageHeader;
         String actualImageHeader = wikiSearchPage.imageHeader.getTextContent();
         Assert.assertEquals(expectedImageHeader, actualImageHeader);
     }

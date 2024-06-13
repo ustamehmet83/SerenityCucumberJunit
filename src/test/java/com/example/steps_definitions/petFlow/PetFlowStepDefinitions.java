@@ -2,22 +2,17 @@ package com.example.steps_definitions.petFlow;
 import com.example.pages.api.Tag;
 import com.example.pages.api.Category;
 import com.example.pages.api.Pet;
-import com.example.steps_definitions.hooks.Hooks;
 import io.cucumber.java.en.Given;
-import io.cucumber.java.en.When;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import org.junit.jupiter.api.*;
-
-
 import java.io.File;
 import java.util.Map;
-
 import static io.restassured.RestAssured.*;
-//import static io.restassured.module.jsv.JsonSchemaValidator.*;
+import static io.restassured.module.jsv.JsonSchemaValidator.*;
 import static java.util.Collections.*;
 import static org.hamcrest.Matchers.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertEquals;
+
 
 public class PetFlowStepDefinitions  {
 
@@ -36,12 +31,12 @@ public class PetFlowStepDefinitions  {
 
     @Given("User create a pet using the Json file")
     public void userCreateAPetUsingTheJsonFile() {
+
         response =
                 given().
-                        contentType(ContentType.JSON).
-                        accept("application/json").
+                        contentType(ContentType.JSON).log().all().
                         body(new File("src/test/resources/requestFile/createPet.json")).
-                        when().
+                        when().log().all().
                         post("/pet");
 
         responseMap = response.body().as(Map.class);
@@ -71,7 +66,7 @@ public class PetFlowStepDefinitions  {
                 "available");
 
         given().
-                contentType(ContentType.JSON).
+                contentType(ContentType.JSON).log().all().
                 accept("application/json").
                 body(requestPet).
                 when().
@@ -157,7 +152,7 @@ public class PetFlowStepDefinitions  {
                 body("id",is(pet_id),
                         "name",equalTo("tomtom"),
                         "status",equalTo("pending")).
-               // body(matchesJsonSchemaInClasspath("responseSchema/getUpdatedPetSchema.json")).
+               body(matchesJsonSchemaInClasspath("responseSchema/getUpdatedPetSchema.json")).
                 log().all() ;
 
     }
