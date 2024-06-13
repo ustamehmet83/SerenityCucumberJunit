@@ -1,4 +1,4 @@
-@DDTPet
+@DDTPet @regression
 Feature: User create update delete pet to execute end to end test
 
   Scenario Outline: User create update delete user

@@ -2,6 +2,7 @@ package com.example.steps_definitions.petFlow;
 import com.example.pages.api.Tag;
 import com.example.pages.api.Category;
 import com.example.pages.api.Pet;
+import com.example.steps_definitions.base.BaseTests;
 import io.cucumber.java.en.Given;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
@@ -14,9 +15,8 @@ import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertEquals;
 
 
-public class PetFlowStepDefinitions  {
+public class PetFlowStepDefinitions{
 
-    public static String osName;
     public Response response;
     public Map<Object, Object> responseMap;
     public static int pet_id;
@@ -192,10 +192,9 @@ public class PetFlowStepDefinitions  {
                 when().
                 get("/pet/" + pet_id).
                 then().assertThat().
-                statusCode(404).
-                body("code",is(1),
-                        "message",equalTo("Pet not found")).
-                log().all() ;
+                statusCode(404).log().all().
+        body("code",is(1),
+                        "message",equalTo("Pet not found"));
 
     }
 

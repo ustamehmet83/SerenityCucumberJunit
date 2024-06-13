@@ -112,7 +112,7 @@
                 <configuration>
                     <includes>
                         <include>**/SerenityRunnerTests.java</include>
-                        <include>**/CucumberTestSuite.java</include>
+                        <include>**/FailedTestRunner.java</include>
                     </includes>
                     <systemPropertyVariables>
                         <webdriver.base.url>${webdriver.base.url}</webdriver.base.url>

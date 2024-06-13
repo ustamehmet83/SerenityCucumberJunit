@@ -1,45 +1,38 @@
 package com.example.steps_definitions.loginPage;
 
-import com.example.pages.uı.StepDashboardPage;
-import com.example.pages.uı.StepLoginPage;
+import com.example.pages.uı.DashboardPage;
+import com.example.pages.uı.LoginPage;
+import com.example.steps_definitions.base.BaseTests;
+import com.example.utilities.ConfigReader;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import net.serenitybdd.annotations.Managed;
 import net.serenitybdd.annotations.Steps;
 import org.junit.Assert;
-import org.openqa.selenium.Keys;
-
-import org.openqa.selenium.WebDriver;
 
 
-public class LoginPageStepDefinitions  {
-
-
-    @Managed
-    WebDriver driver;
+public class LoginPageStepDefinitions extends BaseTests {
     @Steps
-    StepLoginPage loginPage;
-
+    LoginPage loginPage;
     @Steps
-    StepDashboardPage dashPage;
+    DashboardPage dashPage;
+
 
     @Given("User is on Home page")
     public void openApplication() {
-        loginPage.open();
-       // driver.get(ConfigReader.getProperty("webdriver.base.url"));
+        loginPage.getDriver().get(ConfigReader.getProperty("webdriver.base.url"));
         System.out.println("Page is opened");
     }
 
     @When("User enters username as {string}")
     public void enterUsername(String userName) {
         System.out.println("Enter Username");
-        loginPage.username.sendKeys(userName+ Keys.ENTER);
+        loginPage.username.sendKeys(userName);
     }
 
     @When("User enters password as {string}")
     public void enterPassword(String passWord) {
-        loginPage.password.sendKeys(passWord+Keys.ENTER);
+        loginPage.password.sendKeys(passWord);
         loginPage.submitButton.click();
 
     }
@@ -47,13 +40,13 @@ public class LoginPageStepDefinitions  {
     @Then("User should be able to login successfully")
     public void clickOnLoginButton() {
         String dashboardTitle = dashPage.dashboardText.getTextContent();
-        Assert.assertTrue(dashboardTitle.contains("Dashboard"));
+        softAssertionsThread.get().assertThat(dashboardTitle.contains("Dashboard")).isTrue();
     }
 
     @Then("User should be able to see error message {string}")
     public void unsucessfulLogin(String expectedErrorMessage) {
         String actualErrorMessage = loginPage.errorMessage.getText();
-        Assert.assertEquals(expectedErrorMessage, actualErrorMessage);
+        softAssertionsThread.get().assertThat(expectedErrorMessage).isEqualTo(actualErrorMessage);
     }
 
 

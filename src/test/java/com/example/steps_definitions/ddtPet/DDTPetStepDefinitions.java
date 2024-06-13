@@ -1,12 +1,13 @@
 package com.example.steps_definitions.ddtPet;
 
+import com.example.steps_definitions.base.BaseTests;
 import com.example.steps_definitions.hooks.Hooks;
 import io.cucumber.java.en.Given;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsEqual.equalTo;
 
-public class DDTPetStepDefinitions  {
+public class DDTPetStepDefinitions extends BaseTests {
 
     @Given("User get multiple pet with {int} and {string}")
     public void userGetMultiplePetWithCsvSource(int id, String expectedName) {

@@ -2,20 +2,20 @@ package com.example.steps_definitions.wikiSearch;
 
 
 import com.example.pages.uı.WikiSearchPage;
+import com.example.steps_definitions.base.BaseTests;
 import com.example.utilities.ConfigReader;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import net.serenitybdd.annotations.Managed;
 import net.serenitybdd.annotations.Steps;
 import org.junit.Assert;
-import org.openqa.selenium.WebDriver;
 
-public class WikiSearch_StepDefinitions {
+public class WikiSearch_StepDefinitions extends BaseTests {
 
     @Steps
     WikiSearchPage wikiSearchPage;
+
 
     @Given("User is on Wikipedia home page")
     public void user_is_on_wikipedia_home_page() {
@@ -36,22 +36,22 @@ public class WikiSearch_StepDefinitions {
     @Then("User sees {string} is in the wiki title")
     public void user_sees_is_in_the_wiki_title(String title) {
         String expectedTitle = title;
-        String actualTitle =wikiSearchPage.getDriver().getTitle();
-        Assert.assertTrue( actualTitle.contains(expectedTitle));
+        String actualTitle = wikiSearchPage.getDriver().getTitle();
+        softAssertionsThread.get().assertThat(actualTitle.contains(expectedTitle)).isTrue();
     }
 
     @Then("User sees {string} is in the main header")
     public void user_sees_steve_jobs_is_in_the_main_header(String header) {
         String expectedHeader = header;
         String actualFirstHeader = wikiSearchPage.firstHeader.getText();
-        Assert.assertEquals("Title is not as expected", expectedHeader, actualFirstHeader);
+        softAssertionsThread.get().assertThat(expectedHeader).isEqualTo(actualFirstHeader);
     }
 
     @Then("User sees {string} is in the image header")
     public void user_sees_is_in_the_image_header(String imageHeader) {
         String expectedImageHeader = imageHeader;
         String actualImageHeader = wikiSearchPage.imageHeader.getTextContent();
-        Assert.assertEquals(expectedImageHeader, actualImageHeader);
+        softAssertionsThread.get().assertThat(expectedImageHeader).isEqualTo(actualImageHeader);
     }
 
 

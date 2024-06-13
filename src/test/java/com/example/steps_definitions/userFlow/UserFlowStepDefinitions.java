@@ -2,6 +2,7 @@ package com.example.steps_definitions.userFlow;
 
 import com.example.pages.api.Pet;
 
+import com.example.steps_definitions.base.BaseTests;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -17,12 +18,9 @@ import static io.restassured.RestAssured.*;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static org.hamcrest.Matchers.*;
 
-public class UserFlowStepDefinitions {
+public class UserFlowStepDefinitions extends BaseTests {
 
-    public Response response;
-    public Map<Object, Object> responseMap;
-    public static int pet_id;
-    public Pet requestPet;
+
 
     /**************************************************************
      * The test expecting to create successfully a user on the page

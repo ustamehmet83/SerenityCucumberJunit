@@ -1,3 +1,4 @@
+@login @smoke
 Feature: Login Page
 
   @ValidCredentials
