@@ -4,11 +4,15 @@ The project has build scripts for both Maven and Gradle, and follows the standar
 src
   + main
   + test
-    + java                        Test runners and supporting code
+    + java                        
+       + pages                    Web Elements
+       + runners                  Test runners
+       + step_definitions         Test methods
+       + utilities                Support code
     + resources
       + features                  Feature files
-        + WikiSearch                  Feature file subdirectories
-                 WikiSearch.feature
+        + WikiSearch              Feature file subdirectories
+            WikiSearch.feature
 ```
 ## Serenity BDD with Feature Files under src/test/resources
 
@@ -168,7 +172,7 @@ calling the GET /pet/{petId} API end point.
 
 In other words, we could write our test in the Given-When-Then format as follows.
 
-```
+```Gherkin
 Given User create a pet using the Json file
 Then User gets Created previous test's pet calling details
 ```
@@ -219,84 +223,147 @@ You can trigger this by running `mvn serenity:aggregate` from the command line o
 They reports are also integrated into the Maven build process: the following code in the `pom.xml` file causes the reports
 to be generated automatically once all the tests have completed when you run `mvn verify`?
 
+These reports are configured in the Serenity Maven plugin, where you need to do two things. 
+First, you need to add a dependency for the serenity-emailer module in the plugin configuration.
+Then, you need to tell Serenity to generate the email report when it performs the aggregation task.
 ```
-             <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>${maven.surefire.plugin.version}</version>
-                <configuration>
-                    <parallel>methods</parallel>
-                    <threadCount>1</threadCount>
-                    <perCoreThreadCount>false</perCoreThreadCount>
-                    <testFailureIgnore>true</testFailureIgnore>
-                    <runOrder>Alphabetical</runOrder>
-                    <includes>
-                        <include>**/SerenityRunnerTests.java</include>
-                        <include>**/CucumberTestSuite.java</include>
-                    </includes>
-                </configuration>
-            </plugin>
+report {
+      accessibility = true
+      durations = "1,2,4,8,15,30,60"
+      tagtypes = "capability,feature"
+      hide.empty.requirements = true
+      exclude.tags = "resetappstate,singlebrowser,manual"
+       }
+```
+### accessibility
+The squiggly lines in the orange bars (indicating broken tests) are for accessiblity.
 
-            <plugin>
-                <artifactId>maven-failsafe-plugin</artifactId>
-                <version>${maven.failsafe.plugin.version}</version>
-                <configuration>
-                    <includes>
-                        <include>**/SerenityRunnerTests.java</include>
-                        <include>**/CucumberTestSuite.java</include>
-                    </includes>
-                    <systemPropertyVariables>
-                        <webdriver.base.url>${webdriver.base.url}</webdriver.base.url>
-                    </systemPropertyVariables>
-                    <parallel>classes</parallel>
-                    <threadCount>${parallel.tests}</threadCount>
-                    <forkCount>${parallel.tests}</forkCount>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>integration-test</goal>
-                            <goal>verify</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+### durations
+The Key Statistics section shows execution times and the overall number of test scenarios and test cases. 
+You can define the ranges of duration values that appear in the report
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven.compiler.plugin.version}</version>
-                <configuration>
-                    <source>${maven.compiler.source.version}</source>
-                    <target>${maven.compiler.target.version}</target>
-                </configuration>
-            </plugin>
+### tagtypes
+The Functional Coverage section lets you highlight key areas of your application.
+By default, this section will list test results for each Feature. But you can configure the report 
+to group results by other tags as well.
 
-            <plugin>
-                <groupId>net.serenity-bdd.maven.plugins</groupId>
-                <artifactId>serenity-maven-plugin</artifactId>
-                <version>${serenity.version}</version>
-                <dependencies>
-                    <dependency>
-                        <groupId>net.serenity-bdd</groupId>
-                        <artifactId>serenity-single-page-report</artifactId>
-                        <version>${serenity.version}</version>
-                    </dependency>
-                </dependencies>
-                <configuration>
-                    <tags>${tags}</tags>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>serenity-reports</id>
-                        <phase>post-integration-test</phase>
-                        <goals>
-                            <goal>aggregate</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
+### hide.empty.requirements
+This function is used to manage the display of requirements in the generated reports.
+By default, Serenity BDD generates reports that include all requirements, even those that do not have any
+associated test results. This can sometimes make the reports cluttered or harder to read, especially if there 
+are many requirements with no tests or results yet.
+
+### exclude.tags
+This section also mentions which the features containing the most failing tests.
+You can see which tests fail for a given reason by clicking on the corresponding 
+error tag just below this section.
+
+``` 
+ <plugin>
+     <groupId>net.serenity-bdd.maven.plugins</groupId>
+     <artifactId>serenity-maven-plugin</artifactId>
+     <version>${serenity.version}</version>
+     <dependencies>
+         <dependency>
+             <groupId>net.serenity-bdd</groupId>
+             <artifactId>serenity-single-page-report</artifactId>
+             <version>${serenity.version}</version>
+         </dependency>
+     </dependencies>
+     <configuration>
+         <tags>${tags}</tags>
+     </configuration>
+     <executions>
+         <execution>
+             <id>serenity-reports</id>
+             <phase>post-integration-test</phase>
+             <goals>
+                 <goal>aggregate</goal>
+             </goals>
+         </execution>
+     </executions>
+ </plugin> 
+```
+
+The Failsafe Plugin is designed to run integration tests while the Surefire Plugin is designed to run unit tests.
+The name (failsafe) was chosen both because it is a synonym of surefire and because it implies that when it fails,
+it does so in a safe way.
+```
+ <plugin>
+    <artifactId>maven-failsafe-plugin</artifactId>
+    <version>${maven.failsafe.plugin.version}</version>
+    <configuration>
+        <includes>
+            <include>**/SerenityRunnerTests.java</include>
+            <include>**/CucumberTestSuite.java</include>
+        </includes>
+        <systemPropertyVariables>
+            <webdriver.base.url>${webdriver.base.url}</webdriver.base.url>
+        </systemPropertyVariables>
+        <parallel>classes</parallel>
+        <threadCount>${parallel.tests}</threadCount>
+        <forkCount>${parallel.tests}</forkCount>
+    </configuration>
+    <executions>
+        <execution>
+            <goals>
+                <goal>integration-test</goal>
+                <goal>verify</goal>
+            </goals>
+        </execution>
+    </executions>
+</plugin>
+```
+```
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-surefire-plugin</artifactId>
+    <version>${maven.surefire.plugin.version}</version>
+    <configuration>
+        <parallel>methods</parallel>
+        <threadCount>1</threadCount>
+        <perCoreThreadCount>false</perCoreThreadCount>
+        <testFailureIgnore>true</testFailureIgnore>
+        <runOrder>Alphabetical</runOrder>
+        <includes>
+            <include>**/SerenityRunnerTests.java</include>
+            <include>**/CucumberTestSuite.java</include>
+        </includes>
+    </configuration>
+</plugin>
+
+
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-compiler-plugin</artifactId>
+    <version>${maven.compiler.plugin.version}</version>
+    <configuration>
+        <source>${maven.compiler.source.version}</source>
+        <target>${maven.compiler.target.version}</target>
+    </configuration>
+</plugin>
+```
+## junit-platform.properties File
+
+This file enables and configures parallel execution.
+These properties enable parallel execution and configure it to use a dynamic strategy,
+along with the Serenity reporter for parallel execution
+
+```
+cucumber.execution.parallel.enabled=true
+cucumber.execution.parallel.config.strategy=fixed
+cucumber.execution.parallel.config.fixed.parallelism=4
+cucumber.execution.parallel.config.fixed.max-pool-size=4
+cucumber.plugin=io.cucumber.core.plugin.SerenityReporterParallel
+```
+
+## cucumber.properties File
+
+This file will contain the Cucumber options for your Cucumber tests.
+
+```
+cucumber.execution.order = random
+cucumber.plugin=pretty,json:target/cucumber.json,timeline:target/test-results/timeline
+cucumber.snippet-type=camelcase
+
 ```
